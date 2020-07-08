@@ -1629,6 +1629,11 @@
   resolved "https://registry.npm.taobao.org/@types/stack-utils/download/@types/stack-utils-1.0.1.tgz#0a851d3bd96498fa25c33ab7278ed3bd65f06c3e"
   integrity sha1-CoUdO9lkmPolwzq3J47TvWXwbD4=
 
+"@types/suncalc@^1.8.0":
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/@types/suncalc/-/suncalc-1.8.0.tgz#0f5a91cf413e667ea472947c1962521c1064bf56"
+  integrity sha512-1Bx7KgoCLP8LuKaY9whWiX0Y8JMEB9gmZHNJigainwFuv3gEkZvTx0AGNvnA5nSu1daQcJDKScm9tNpW/ZjpjA==
+
 "@types/testing-library__dom@*":
   version "7.5.0"
   resolved "https://registry.npm.taobao.org/@types/testing-library__dom/download/@types/testing-library__dom-7.5.0.tgz?cache=0&sync_timestamp=1592998446560&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Ftesting-library__dom%2Fdownload%2F%40types%2Ftesting-library__dom-7.5.0.tgz#e0a00dd766983b1d6e9d10d33e708005ce6ad13e"
@@ -9923,6 +9928,11 @@ stylehacks@^4.0.0:
     browserslist "^4.0.0"
     postcss "^7.0.0"
     postcss-selector-parser "^3.0.0"
+
+suncalc@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/suncalc/-/suncalc-1.8.0.tgz#1d9898109563078750f4994a959e654d876acbf5"
+  integrity sha1-HZiYEJVjB4dQ9JlKlZ5lTYdqy/U=
 
 supports-color@^2.0.0:
   version "2.0.0"
