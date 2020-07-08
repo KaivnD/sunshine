@@ -1,4 +1,5 @@
 import React from "react";
+import "./global.css";
 import { Scene } from "./Scene";
 
 function App() {
