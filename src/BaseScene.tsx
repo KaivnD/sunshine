@@ -18,12 +18,17 @@ import {
 } from "three";
 
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer'
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
+import { SSAARenderPass } from 'three/examples/jsm/postprocessing/SSAARenderPass.js'
 
-export abstract class BaseScene<P = {}, S = {}> extends Component<P, S> {
+export abstract class BaseScene extends Component {
   el!: HTMLDivElement;
   scene!: Scene;
   camera!: PerspectiveCamera;
   renderer!: WebGLRenderer;
+  composer!: EffectComposer
+  ssaaRenderPass!: SSAARenderPass
   directionalLight1!: DirectionalLight;
   controls!: OrbitControls;
 
@@ -35,7 +40,7 @@ export abstract class BaseScene<P = {}, S = {}> extends Component<P, S> {
     const retio = window.innerWidth / window.innerHeight;
 
     this.camera = new PerspectiveCamera(70, retio, 1, 10000);
-    this.camera.position.set(0, 300, 0);
+    this.camera.position.set(120, 120, 120);
     this.camera.rotateX(-Math.PI / 2);
     this.scene.add(this.camera);
 
@@ -63,11 +68,23 @@ export abstract class BaseScene<P = {}, S = {}> extends Component<P, S> {
     plane.receiveShadow = true;
     this.scene.add(plane);
 
+    this.composer = new EffectComposer(this.renderer)
+
+    const renderPass = new RenderPass(this.scene, this.camera)
+    this.composer.addPass(renderPass)
+
+    this.ssaaRenderPass = new SSAARenderPass(this.scene, this.camera, '#fff', 0)
+    this.ssaaRenderPass.unbiased = true
+    this.ssaaRenderPass.sampleLevel = 4
+    this.composer.addPass(this.ssaaRenderPass)
+
     this.el.appendChild(this.renderer.domElement);
-    window.addEventListener("resize", () => this.onWindowResize(), false);
+
+    this.onWindowResize = this.onWindowResize.bind(this)
+
+    window.addEventListener("resize", this.onWindowResize, false);
 
     this.onCreated();
-    console.log(this.scene);
     this.animate();
   }
 
@@ -150,12 +167,13 @@ export abstract class BaseScene<P = {}, S = {}> extends Component<P, S> {
 
   animate = () => {
     requestAnimationFrame(this.animate);
-    this.renderer.render(this.scene, this.camera);
+    this.composer.render();
   };
 
   componentWillUnmount() {
     if (!this.el) return;
     this.el.removeChild(this.renderer.domElement);
+    window.removeEventListener('resize', this.onWindowResize, false)
   }
 
   render() {
